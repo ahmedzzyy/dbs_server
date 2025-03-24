@@ -7,13 +7,17 @@
   "type": "module",
   "main": "src/app.js",
   "scripts": {
+    "start": "node src/app.js",
     "test": "echo \"Error: no test specified\" && exit 1",
     "lint": "npx eslint src/**/*.js",
     "check": "npx prettier src --check",
     "format": "npx prettier src --write"
   },
   "dependencies": {
-    "fastify": "^5.2.1"
+    "@fastify/cors": "^11.0.0",
+    "dotenv": "^16.4.7",
+    "fastify": "^5.2.1",
+    "pg": "^8.14.1"
   },
   "devDependencies": {
     "@eslint/js": "^9.23.0",
