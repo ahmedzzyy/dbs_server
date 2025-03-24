@@ -2,8 +2,23 @@ import Fastify from "fastify";
 import cors from "@fastify/cors";
 import "dotenv/config";
 
+import { closeDB, connectDB } from "./db/connect.js";
+
 const fastify = Fastify({
   logger: true,
+});
+
+// DB Setup
+await connectDB();
+
+const shutDown = async () => {
+  await closeDB();
+  process.exit(0);
+}
+
+fastify.addHook("onClose", async (_instance, done) => {
+  await closeDB();
+  done();
 });
 
 // CORS
@@ -27,3 +42,7 @@ fastify.listen({ port: PORT }, function (err, address) {
   }
   console.log(`Server : Listening on ${address}`);
 });
+
+// Graceful Exit from fastify and pg
+process.on("SIGINT", shutDown);
+process.on("SIGTERM", shutDown);
