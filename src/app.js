@@ -14,7 +14,7 @@ await connectDB();
 const shutDown = async () => {
   await closeDB();
   process.exit(0);
-}
+};
 
 fastify.addHook("onClose", async (_instance, done) => {
   await closeDB();
