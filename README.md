@@ -31,3 +31,13 @@ npm run check
 ```bash
 npm run format
 ```
+
+- Run migration or undo
+```bash
+npm run migrate <up / down>
+```
+
+- Run migration or undo
+```bash
+npm run migrate:create <migration-name>
+```
