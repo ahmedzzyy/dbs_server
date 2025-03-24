@@ -11,7 +11,9 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "lint": "npx eslint src/**/*.js",
     "check": "npx prettier src --check",
-    "format": "npx prettier src --write"
+    "format": "npx prettier src --write",
+    "migrate": "node-pg-migrate -m src/db/migrations",
+    "migrate:create": "node-pg-migrate create -m src/db/migrations"
   },
   "dependencies": {
     "@fastify/cors": "^11.0.0",
@@ -24,6 +26,7 @@
     "eslint": "^9.23.0",
     "eslint-config-prettier": "^10.1.1",
     "globals": "^16.0.0",
+    "node-pg-migrate": "^7.9.1",
     "prettier": "^3.5.3"
   }
 }
