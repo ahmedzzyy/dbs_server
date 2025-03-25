@@ -5,6 +5,11 @@ import eslintConfigPrettier from "eslint-config-prettier/flat";
 /** @type {import('eslint').Linter.Config[]} */
 export default [
   pluginJs.configs.recommended,
-  {languageOptions: { globals: globals.node }},
+  {
+    languageOptions: { globals: globals.node },
+    rules: {
+      "no-unused-vars": ["error", { "argsIgnorePattern": "^_" }]
+    }
+  },
   eslintConfigPrettier,
 ];
