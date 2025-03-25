@@ -2,7 +2,7 @@
  * Creates a new user
  * @param {import("pg").Pool} db - The PostgreSQL Pool
  * @param {Object} userData - The user data { username, email, password }
- * @returns {Object} The created user
+ * @returns {Promise<Object>} The created user
  */
 export async function createUser(db, { username, email, password }) {
   const query = `
@@ -21,7 +21,7 @@ export async function createUser(db, { username, email, password }) {
  * Find a user by email
  * @param {import("pg").Pool} db - The PostgreSQL Pool
  * @param {string} email The user's email
- * @returns {Object|undefined} The user
+ * @returns {Promise<Object>|undefined} The user
  */
 export async function findUserByEmail(db, email) {
   const query = `
