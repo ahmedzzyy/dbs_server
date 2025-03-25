@@ -2,13 +2,15 @@ import Fastify from "fastify";
 import cors from "@fastify/cors";
 import "dotenv/config";
 
-import { closeDB, connectDB } from "./db/connect.js";
+import pool, { closeDB, connectDB } from "./db/connect.js";
 
 const fastify = Fastify({
   logger: true,
 });
 
 // DB Setup
+fastify.decorate("db", pool);
+
 await connectDB();
 
 const shutDown = async () => {
@@ -29,9 +31,10 @@ await fastify.register(cors, {
 });
 
 // Controllers / Routes
-fastify.get("/", function (_request, reply) {
-  reply.send({ hello: "world" });
-});
+await Promise.all([
+  fastify.register(await import("./controllers/movies.js"), { prefix: "/api" }),
+  fastify.register(await import("./controllers/users.js"), { prefix: "/api" }),
+]);
 
 // Server Run
 const PORT = process.env.PORT || 5500;

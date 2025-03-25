@@ -10,7 +10,7 @@ const pool = new Pool({
   // "max": 10 // Default hi 10 hai
 });
 
-const connectDB = async () => {
+export const connectDB = async () => {
   try {
     await pool.query("SELECT 1"); // Testing ke liye
     console.log("Server : 🟢 PostgreSQL Connected!");
@@ -21,10 +21,10 @@ const connectDB = async () => {
   }
 };
 
-const closeDB = async () => {
+export const closeDB = async () => {
   console.log("Server : 🔴 Closing PostgreSQL pool...");
   await pool.end();
   console.log("Server : 🟢 PostgreSQL pool closed.");
 };
 
-export { connectDB, closeDB };
+export default pool;
