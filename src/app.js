@@ -3,10 +3,14 @@ import cors from "@fastify/cors";
 import "dotenv/config";
 
 import pool, { closeDB, connectDB } from "./db/connect.js";
+import { authenticateRequest } from "./utils/authUtil.js";
 
 const fastify = Fastify({
   logger: true,
 });
+
+// Auth
+fastify.decorate("authenticate", authenticateRequest);
 
 // DB Setup
 fastify.decorate("db", pool);
