@@ -1,3 +1,4 @@
+import { getCastByMovieID } from "../services/actorService.js";
 import {
   createMovie,
   deleteMovieById,
@@ -171,6 +172,18 @@ export default async function movieController(fastify, _opts) {
                   },
                 },
               },
+              cast: {
+                type: "array",
+                items: {
+                  type: "object",
+                  description: "Cast of the specified movie",
+                  properties: {
+                    Actor_ID: { type: "number" },
+                    Actor_Name: { type: "string" },
+                    Country: { type: "string" },
+                  },
+                },
+              },
             },
           },
           404: {
@@ -200,10 +213,12 @@ export default async function movieController(fastify, _opts) {
           return reply.code(404).send({ error: "Movie not found" });
         }
 
-        // TODO add fetch cast aise movies.cast = []
         // TODO add fetch awards aise movies.awards = []
         const reviews = await getReviewsByMovieID(fastify.db, movie_id);
         movie.reviews = reviews;
+
+        const cast = await getCastByMovieID(fastify.db, movie_id);
+        movie.cast = cast;
 
         reply.send(movie);
       } catch (error) {

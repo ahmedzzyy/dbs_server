@@ -55,6 +55,7 @@ await fastify.register(fastifySwagger, {
       { name: "users", description: "users related end-points" },
       { name: "review", description: "Review related end-points" },
       { name: "watchlist", description: "Watchlist related end-points" },
+      { name: "actor", description: "Actors related end-points" },
     ],
     components: {
       securitySchemes: {
@@ -88,6 +89,7 @@ await Promise.all([
   fastify.register(await import("./controllers/watchlist.js"), {
     prefix: "/api",
   }),
+  fastify.register(await import("./controllers/actors.js"), { prefix: "/api" }),
 ]);
 
 // Server Run
