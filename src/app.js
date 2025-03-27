@@ -54,12 +54,13 @@ await fastify.register(fastifySwagger, {
       { name: "movies", description: "Movie related end-points" },
       { name: "users", description: "users related end-points" },
       { name: "review", description: "Review related end-points" },
+      { name: "watchlist", description: "Watchlist related end-points" },
     ],
     components: {
       securitySchemes: {
         bearerAuth: {
           name: "authorization",
-          type: "apiKey",
+          type: "http",
           scheme: "bearer",
           bearerFormat: "JWT",
           description: "Bearer token for JWT Authentication",
@@ -84,6 +85,7 @@ await Promise.all([
   fastify.register(await import("./controllers/movies.js"), { prefix: "/api" }),
   fastify.register(await import("./controllers/users.js"), { prefix: "/api" }),
   fastify.register(await import("./controllers/review.js"), { prefix: "/api" }),
+  fastify.register(await import("./controllers/watchlist.js"), { prefix: "/api" }),
 ]);
 
 // Server Run
