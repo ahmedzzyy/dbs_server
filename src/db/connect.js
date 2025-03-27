@@ -19,7 +19,11 @@ export const connectDB = async () => {
 
 export const closeDB = async () => {
   console.log("Server : 🔴 Closing PostgreSQL pool...");
-  await pool.end();
+  try {
+    await pool.end();
+  } catch (error) {
+    console.error(error);
+  }
   console.log("Server : 🟢 PostgreSQL pool closed.");
 };
 
