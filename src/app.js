@@ -1,5 +1,7 @@
 import Fastify from "fastify";
 import cors from "@fastify/cors";
+import fastifySwagger from "@fastify/swagger";
+import fastifySwaggerUi from "@fastify/swagger-ui";
 import "dotenv/config";
 
 import pool, { closeDB, connectDB } from "./db/connect.js";
@@ -32,6 +34,37 @@ await fastify.register(cors, {
   origin: process.env.FRONTEND_LOCAL_URL,
   methods: "GET,POST,PUT,DELETE",
   credentials: true,
+});
+
+// Swagger
+await fastify.register(fastifySwagger, {
+  openapi: {
+    info: {
+      title: "API for Movie Management System",
+      description: "Created for DBS Project",
+      version: "1.0.0",
+    },
+    servers: [
+      {
+        url: `http://localhost:${process.env.PORT || 5500}`,
+        description: "Local Development Server",
+      },
+    ],
+    tags: [
+      { name: "movies", description: "Movie related end-points" },
+      { name: "users", description: "users related end-points" },
+      { name: "review", description: "Review related end-points" },
+    ],
+  },
+});
+
+await fastify.register(fastifySwaggerUi, {
+  routePrefix: "/docs",
+  uiConfig: {
+    docExpansion: "list",
+    deepLinking: false,
+  },
+  staticCSP: true,
 });
 
 // Controllers / Routes
