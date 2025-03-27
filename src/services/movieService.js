@@ -124,6 +124,24 @@ export async function getMovieById(db, movieId) {
 }
 
 /**
+ * Get movies in a particular watchlist
+ * @param {import("pg").Pool} db - The PostgreSQL pool
+ * @param {number|string} watchlistId - The watchlist whose movies are to be fetched
+ * @returns {Promise<Object>} - movies as an array
+ */
+export async function getMoviesByWatchlistID(db, watchlistId) {
+  const query = `
+    SELECT m."Movie_ID" AS movieId, m."Title", m."Genre", m."Director", m."Release_Year", m."Language"
+    FROM watchlist_movie wm
+    JOIN "Movie" m ON wm.movie_id = m."Movie_ID"
+    WHERE wm.watchlist_id = $1
+  `;
+
+  const result = await db.query(query, [watchlistId]);
+  return result.rows;
+}
+
+/**
  * Update a movie by ID
  * @param {import("pg").Pool} db - The PostgreSQL Pool
  * @param {number|string} movieId - The movie's ID
