@@ -26,9 +26,9 @@ export async function createReview(db, userId, movieId, { rating, comment }) {
  * Deletes a review by ID
  * @param {import("pg").Pool} db - The PostgreSQL Pool
  * @param {number|string} movieId - ID of movie whose reviews are to be fetched
- * 
+ *
  * @returns {Promise<Object|null>} Reviews of the movie
-*/
+ */
 export async function getReviewsByMovieID(db, movieId) {
   const query = `
     SELECT review_id, user_id, "Users"."Username", rating, comment
