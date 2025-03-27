@@ -5,6 +5,7 @@ import {
   getMovies,
   updateMovieById,
 } from "../services/movieService.js";
+import { getReviewsByMovieID } from "../services/reviewService.js";
 
 /**
  * User routes
@@ -56,7 +57,8 @@ export default async function movieController(fastify, _opts) {
 
       // TODO add fetch cast aise movies.cast = []
       // TODO add fetch awards aise movies.awards = []
-      // TODO add fetch reviews aise movies.reviews = []
+      const reviews = await getReviewsByMovieID(fastify.db, movie_id);
+      movie.reviews = reviews;
 
       reply.send(movie);
     } catch (error) {
