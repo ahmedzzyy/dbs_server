@@ -55,6 +55,18 @@ await fastify.register(fastifySwagger, {
       { name: "users", description: "users related end-points" },
       { name: "review", description: "Review related end-points" },
     ],
+    components: {
+      securitySchemes: {
+        bearerAuth: {
+          name: "authorization",
+          type: "apiKey",
+          scheme: "bearer",
+          bearerFormat: "JWT",
+          description: "Bearer token for JWT Authentication",
+          in: "header",
+        },
+      },
+    },
   },
 });
 
