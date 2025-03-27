@@ -85,7 +85,9 @@ await Promise.all([
   fastify.register(await import("./controllers/movies.js"), { prefix: "/api" }),
   fastify.register(await import("./controllers/users.js"), { prefix: "/api" }),
   fastify.register(await import("./controllers/review.js"), { prefix: "/api" }),
-  fastify.register(await import("./controllers/watchlist.js"), { prefix: "/api" }),
+  fastify.register(await import("./controllers/watchlist.js"), {
+    prefix: "/api",
+  }),
 ]);
 
 // Server Run

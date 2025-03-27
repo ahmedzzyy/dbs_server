@@ -157,7 +157,8 @@ export default async function watchlistController(fastify, _opts) {
         const userWatchlists = await getWatchlistsByUserID(fastify.db, userId);
 
         const watchlistBelongs = userWatchlists.find(
-          (watchlist) => Number(watchlist.watchlist_id) === Number(watchlist_id),
+          (watchlist) =>
+            Number(watchlist.watchlist_id) === Number(watchlist_id),
         );
 
         if (!watchlistBelongs) {
@@ -177,7 +178,8 @@ export default async function watchlistController(fastify, _opts) {
 
   fastify.post(
     "/users/me/watchlists",
-    { preValidation: fastify.authenticate,
+    {
+      preValidation: fastify.authenticate,
       schema: {
         description: "Creates a new watchlist for the authenticated user.",
         summary: "Create watchlist",
@@ -198,7 +200,10 @@ export default async function watchlistController(fastify, _opts) {
             description: "Watchlist created successfully.",
             type: "object",
             properties: {
-              message: { type: "string", example: "Watchlist created successfully" },
+              message: {
+                type: "string",
+                example: "Watchlist created successfully",
+              },
               watchlist: {
                 type: "object",
                 properties: {
@@ -225,7 +230,7 @@ export default async function watchlistController(fastify, _opts) {
           },
         },
       },
-     },
+    },
     async (request, reply) => {
       const userId = request.user.id;
       const { name } = request.body;
@@ -244,7 +249,8 @@ export default async function watchlistController(fastify, _opts) {
 
   fastify.post(
     "/users/me/watchlists/:watchlist_id",
-    { preValidation: fastify.authenticate,
+    {
+      preValidation: fastify.authenticate,
       schema: {
         description:
           "Adds a movie to the specified watchlist for the authenticated user.",
@@ -276,7 +282,10 @@ export default async function watchlistController(fastify, _opts) {
             description: "Movie added to watchlist successfully.",
             type: "object",
             properties: {
-              message: { type: "string", example: "Movie added to watchlist successfully" },
+              message: {
+                type: "string",
+                example: "Movie added to watchlist successfully",
+              },
               updatedWatchlist: {
                 type: "object",
                 properties: {
@@ -290,7 +299,10 @@ export default async function watchlistController(fastify, _opts) {
                         movieId: { type: "number", example: 101 },
                         Title: { type: "string", example: "Inception" },
                         Genre: { type: "string", example: "Sci-Fi" },
-                        Director: { type: "string", example: "Christopher Nolan" },
+                        Director: {
+                          type: "string",
+                          example: "Christopher Nolan",
+                        },
                         Release_Year: { type: "number", example: 2010 },
                         Language: { type: "string", example: "English" },
                       },
@@ -326,7 +338,7 @@ export default async function watchlistController(fastify, _opts) {
           },
         },
       },
-     },
+    },
     async (request, reply) => {
       const userId = request.user.id;
       const { watchlist_id } = request.params;
@@ -336,7 +348,8 @@ export default async function watchlistController(fastify, _opts) {
         const userWatchlists = await getWatchlistsByUserID(fastify.db, userId);
 
         const watchlistBelongs = userWatchlists.find(
-          (watchlist) => Number(watchlist.watchlist_id) === Number(watchlist_id),
+          (watchlist) =>
+            Number(watchlist.watchlist_id) === Number(watchlist_id),
         );
 
         if (!watchlistBelongs) {
@@ -407,7 +420,10 @@ export default async function watchlistController(fastify, _opts) {
             description: "Watchlist or movie not found.",
             type: "object",
             properties: {
-              error: { type: "string", example: "Movie not found in this watchlist" },
+              error: {
+                type: "string",
+                example: "Movie not found in this watchlist",
+              },
             },
           },
           500: {
@@ -428,7 +444,8 @@ export default async function watchlistController(fastify, _opts) {
         const userWatchlists = await getWatchlistsByUserID(fastify.db, userId);
 
         const watchlistBelongs = userWatchlists.find(
-          (watchlist) => Number(watchlist.watchlist_id) === Number(watchlist_id),
+          (watchlist) =>
+            Number(watchlist.watchlist_id) === Number(watchlist_id),
         );
 
         if (!watchlistBelongs) {
@@ -444,7 +461,9 @@ export default async function watchlistController(fastify, _opts) {
         );
 
         if (!success) {
-          return reply.code(404).send({ error: "Movie not found in this watchlist" });
+          return reply
+            .code(404)
+            .send({ error: "Movie not found in this watchlist" });
         }
 
         reply.send({ message: "Movie removed successfully from watchlist" });
