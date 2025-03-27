@@ -8,7 +8,7 @@ import {
 import { getReviewsByMovieID } from "../services/reviewService.js";
 
 /**
- * User routes
+ * Movie routes
  * @param {import("fastify").FastifyInstance} fastify - Fastify instance
  * @param {Object} _opts - Fastify options (unused)
  */
