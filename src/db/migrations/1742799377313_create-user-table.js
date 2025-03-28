@@ -9,16 +9,16 @@ export const shorthands = undefined;
  * @returns {Promise<void> | void}
  */
 export const up = (pgm) => {
-  pgm.createTable("Users", {
-    User_ID: { type: "serial", primaryKey: true },
-    Registration_Date: {
+  pgm.createTable("user_info", {
+    user_id: { type: "serial", primaryKey: true },
+    registration_date: {
       type: "date",
       notNull: true,
       default: pgm.func("CURRENT_DATE"),
     },
-    Username: { type: "varchar(255)", unique: true, notNull: true },
-    Password: { type: "varchar(255)", notNull: true },
-    Email: { type: "varchar(255)", unique: true, notNull: true },
+    username: { type: "varchar(255)", unique: true, notNull: true },
+    password: { type: "varchar(255)", notNull: true },
+    email: { type: "varchar(255)", unique: true, notNull: true },
   });
 };
 
@@ -28,5 +28,5 @@ export const up = (pgm) => {
  * @returns {Promise<void> | void}
  */
 export const down = (pgm) => {
-  pgm.dropTable("Users");
+  pgm.dropTable("user_info");
 };

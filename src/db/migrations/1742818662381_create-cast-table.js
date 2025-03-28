@@ -9,22 +9,22 @@ export const shorthands = undefined;
  * @returns {Promise<void> | void}
  */
 export const up = (pgm) => {
-  pgm.createTable("cast", {
+  pgm.createTable("cast_members", {
     movie_id: {
       type: "integer",
       notNull: true,
-      references: `"Movie"("Movie_ID")`,
+      references: `movie(movie_id)`,
       onDelete: "CASCADE",
     },
     actor_id: {
       type: "integer",
       notNull: true,
-      references: `"Actor"("Actor_ID")`,
+      references: `actor(actor_id)`,
       onDelete: "CASCADE",
     },
   });
 
-  pgm.addConstraint("cast", "cast_pkey", {
+  pgm.addConstraint("cast_members", "cast_pkey", {
     primaryKey: ["movie_id", "actor_id"],
   });
 };
@@ -35,5 +35,5 @@ export const up = (pgm) => {
  * @returns {Promise<void> | void}
  */
 export const down = (pgm) => {
-  pgm.dropTable("cast");
+  pgm.dropTable("cast_members");
 };

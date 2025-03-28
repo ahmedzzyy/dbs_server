@@ -13,7 +13,7 @@ export const up = (pgm) => {
     movie_id: {
       type: "integer",
       notNull: true,
-      references: `"Movie"("Movie_ID")`,
+      references: `movie(movie_id)`,
       onDelete: "CASCADE",
     },
     award_id: {

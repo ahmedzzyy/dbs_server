@@ -51,9 +51,9 @@ export default async function reviewController(fastify, _opts) {
             description: "Actor found",
             type: "object",
             properties: {
-              Actor_ID: { type: "number", example: 1 },
-              Actor_Name: { type: "string", example: "John Doe" },
-              Country: { type: "string", example: "USA" },
+              actor_id: { type: "number", example: 1 },
+              actor_name: { type: "string", example: "John Doe" },
+              country: { type: "string", example: "USA" },
               // You can add more properties as needed
             },
           },
@@ -101,9 +101,9 @@ export default async function reviewController(fastify, _opts) {
             items: {
               type: "object",
               properties: {
-                Actor_ID: { type: "number", example: 1 },
-                Actor_Name: { type: "string", example: "John Doe" },
-                Country: { type: "string", example: "USA" },
+                actor_id: { type: "number", example: 1 },
+                actor_name: { type: "string", example: "John Doe" },
+                country: { type: "string", example: "USA" },
                 // Additional actor properties can be defined here
               },
             },

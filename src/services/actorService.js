@@ -6,9 +6,9 @@
  */
 export async function getActorByID(db, actorId) {
   const query = `
-      SELECT "Actor_ID", "Actor_Name", "Country"
+      SELECT actor_id, actor_name, country
       FROM "Actor"
-      WHERE "Actor_ID" = $1
+      WHERE actor_id = $1
     `;
 
   const result = await db.query(query, [actorId]);
@@ -22,7 +22,7 @@ export async function getActorByID(db, actorId) {
  */
 export async function getActors(db) {
   const query = `
-      SELECT "Actor_ID", "Actor_Name", "Country"
+      SELECT actor_id, actor_name, country
       FROM "Actor"
     `;
 
@@ -39,8 +39,8 @@ export async function getActors(db) {
  */
 export async function getCastByMovieID(db, movieId) {
   const query = `
-      SELECT a."Actor_ID", a."Actor_Name", a."Country"
-      FROM "cast" JOIN "Actor" a ON "cast".actor_id = a."Actor_ID"
+      SELECT a.actor_id, a.actor_name, a.country
+      FROM "cast" JOIN "Actor" a ON "cast".actor_id = a.actor_id
       WHERE "cast".movie_id = $1
     `;
 

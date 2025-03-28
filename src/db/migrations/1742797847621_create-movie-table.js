@@ -9,13 +9,13 @@ export const shorthands = undefined;
  * @returns {Promise<void> | void}
  */
 export const up = (pgm) => {
-  pgm.createTable("Movie", {
-    Movie_ID: { type: "serial", primaryKey: true },
-    Title: { type: "varchar(255)", notNull: true },
-    Genre: { type: "varchar(255)" },
-    Director: { type: "varchar(255)" },
-    Release_Year: { type: "integer" },
-    Language: { type: "varchar(255)" },
+  pgm.createTable("movie", {
+    movie_id: { type: "serial", primaryKey: true },
+    title: { type: "varchar(255)", notNull: true },
+    genre: { type: "varchar(255)" },
+    director: { type: "varchar(255)" },
+    release_year: { type: "integer" },
+    language: { type: "varchar(255)" },
   });
 };
 
@@ -25,5 +25,5 @@ export const up = (pgm) => {
  * @returns {Promise<void> | void}
  */
 export const down = (pgm) => {
-  pgm.dropTable("Movie");
+  pgm.dropTable("movie");
 };

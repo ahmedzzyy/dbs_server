@@ -14,13 +14,13 @@ export const up = (pgm) => {
     movie_id: {
       type: "integer",
       notNull: true,
-      references: `"Movie"("Movie_ID")`,
+      references: `movie(movie_id)`,
       onDelete: "CASCADE",
     },
     user_id: {
       type: "integer",
       notNull: true,
-      references: `"Users"("User_ID")`,
+      references: `user_info(user_id)`,
       onDelete: "CASCADE",
     },
     rating: { type: "integer", check: "rating BETWEEN 1 AND 10" },

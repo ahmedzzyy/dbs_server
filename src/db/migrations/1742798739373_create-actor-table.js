@@ -9,10 +9,10 @@ export const shorthands = undefined;
  * @returns {Promise<void> | void}
  */
 export const up = (pgm) => {
-  pgm.createTable("Actor", {
-    Actor_ID: { type: "serial", primaryKey: true },
-    Actor_Name: { type: "varchar(255)", notNull: true },
-    Country: { type: "varchar(255)" },
+  pgm.createTable("actor", {
+    actor_id: { type: "serial", primaryKey: true },
+    actor_name: { type: "varchar(255)", notNull: true },
+    country: { type: "varchar(255)" },
   });
 };
 
@@ -22,5 +22,5 @@ export const up = (pgm) => {
  * @returns {Promise<void> | void}
  */
 export const down = (pgm) => {
-  pgm.dropTable("Actor");
+  pgm.dropTable("actor");
 };

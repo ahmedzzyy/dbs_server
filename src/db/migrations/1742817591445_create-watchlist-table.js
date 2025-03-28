@@ -15,7 +15,7 @@ export const up = (pgm) => {
     user_id: {
       type: "integer",
       notNull: true,
-      references: `"Users"("User_ID")`,
+      references: `user_info(user_id)`,
       onDelete: "CASCADE",
     },
   });

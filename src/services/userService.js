@@ -6,9 +6,9 @@
  */
 export async function createUser(db, { username, email, password }) {
   const query = `
-    INSERT INTO "Users" ("Username", "Password", "Email")
+    INSERT INTO user_info (username, password, email)
     VALUES ($1, $2, $3)
-    RETURNING "User_ID", "Registration_Date", "Username", "Email"
+    RETURNING user_id, registration_date, username, email
     `;
 
   const values = [username, password, email];
@@ -25,7 +25,7 @@ export async function createUser(db, { username, email, password }) {
  */
 export async function findUserByEmail(db, email) {
   const query = `
-    SELECT * FROM "Users" WHERE "Email" = $1
+    SELECT * FROM user_info WHERE email = $1
     `;
 
   const result = await db.query(query, [email]);
@@ -40,9 +40,9 @@ export async function findUserByEmail(db, email) {
  */
 export async function getUserById(db, userId) {
   const query = `
-    SELECT "User_ID", "Registration_Date", "Username", "Email"
-    FROM "Users"
-    WHERE "User_ID" = $1
+    SELECT user_id, registration_date, username, email
+    FROM user_info
+    WHERE user_id = $1
   `;
   const result = await db.query(query, [userId]);
   return result.rows[0] || null;
@@ -68,15 +68,15 @@ export async function updateUserById(
   let idx = 1;
 
   if (username !== undefined) {
-    updates.push(`"Username" = $${idx++}`);
+    updates.push(`username = $${idx++}`);
     values.push(username);
   }
   if (email !== undefined) {
-    updates.push(`"Email" = $${idx++}`);
+    updates.push(`email = $${idx++}`);
     values.push(email);
   }
   if (password !== undefined) {
-    updates.push(`"Password" = $${idx++}`);
+    updates.push(`password = $${idx++}`);
     values.push(password);
   }
   if (updates.length === 0) {
@@ -85,10 +85,10 @@ export async function updateUserById(
   values.push(userId);
 
   const query = `
-    UPDATE "Users"
+    UPDATE user_info
     SET ${updates.join(", ")}
-    WHERE "User_ID" = $${idx}
-    RETURNING "User_ID", "Registration_Date", "Username", "Email"
+    WHERE user_id = $${idx}
+    RETURNING user_id, registration_date, username, email
   `;
   const result = await db.query(query, values);
   return result.rows[0] || null;
@@ -102,9 +102,9 @@ export async function updateUserById(
  */
 export async function deleteUserById(db, userId) {
   const query = `
-    DELETE FROM "Users"
-    WHERE "User_ID" = $1
-    RETURNING "User_ID"
+    DELETE FROM user_info
+    WHERE user_id = $1
+    RETURNING user_id
   `;
 
   const result = await db.query(query, [userId]);

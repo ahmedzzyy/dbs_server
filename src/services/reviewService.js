@@ -31,8 +31,8 @@ export async function createReview(db, userId, movieId, { rating, comment }) {
  */
 export async function getReviewsByMovieID(db, movieId) {
   const query = `
-    SELECT review_id, user_id, "Users"."Username", rating, comment
-    FROM review NATURAL JOIN "Users"
+    SELECT review_id, user_id, user_info.username, rating, comment
+    FROM review NATURAL JOIN user_info
     WHERE movie_id = $1
   `;
 

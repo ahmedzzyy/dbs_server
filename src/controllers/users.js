@@ -68,10 +68,10 @@ export default async function userController(fastify, _opts) {
               user: {
                 type: "object",
                 properties: {
-                  User_ID: { type: "number" },
-                  Registration_Date: { type: "string" },
-                  Username: { type: "string" },
-                  Email: { type: "string", format: "email" },
+                  user_id: { type: "number" },
+                  registration_date: { type: "string" },
+                  username: { type: "string" },
+                  email: { type: "string", format: "email" },
                 },
               },
             },
@@ -213,7 +213,7 @@ export default async function userController(fastify, _opts) {
           return reply.code(401).send({ error: "Invalid credentials." });
         }
 
-        const token = generateToken({ id: user.User_ID, email: user.Email });
+        const token = generateToken({ id: user.user_id, email: user.email });
         reply.send({ message: "Login successful", token });
       } catch (error) {
         reply.code(500).send({ error: error.message });
@@ -246,10 +246,10 @@ export default async function userController(fastify, _opts) {
             description: "User found",
             type: "object",
             properties: {
-              User_ID: { type: "integer" },
-              Registration_Date: { type: "string" },
-              Username: { type: "string" },
-              Email: { type: "string", format: "email" },
+              user_id: { type: "integer" },
+              registration_date: { type: "string" },
+              username: { type: "string" },
+              email: { type: "string", format: "email" },
             },
           },
           401: {
@@ -311,10 +311,10 @@ export default async function userController(fastify, _opts) {
             description: "User found",
             type: "object",
             properties: {
-              User_ID: { type: "integer" },
-              Registration_Date: { type: "string" },
-              Username: { type: "string" },
-              Email: { type: "string", format: "email" },
+              user_id: { type: "integer" },
+              registration_date: { type: "string" },
+              username: { type: "string" },
+              email: { type: "string", format: "email" },
             },
           },
           401: {
@@ -391,10 +391,10 @@ export default async function userController(fastify, _opts) {
               user: {
                 type: "object",
                 properties: {
-                  User_ID: { type: "integer" },
-                  Registration_Date: { type: "string" },
-                  Username: { type: "string" },
-                  Email: { type: "string", format: "email" },
+                  user_id: { type: "integer" },
+                  registration_date: { type: "string" },
+                  username: { type: "string" },
+                  email: { type: "string", format: "email" },
                 },
               },
             },

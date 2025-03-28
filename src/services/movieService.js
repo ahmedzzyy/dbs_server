@@ -14,9 +14,9 @@ export async function createMovie(
   { title, genre, director, releaseYear, language },
 ) {
   const query = `
-    INSERT INTO "Movie" ("Title", "Genre", "Director", "Release_Year", "Language")
+    INSERT INTO movie (title, genre, director, release_year, language)
     VALUES ($1, $2, $3, $4, $5)
-    RETURNING "Movie_ID", "Title", "Genre", "Director", "Release_Year", "Language"
+    RETURNING movie_id, title, genre, director, release_year, language
     `;
 
   const values = [title, genre, director, releaseYear, language];
@@ -40,12 +40,12 @@ export async function getMovies(db, page = 1, pageSize = 10, options = {}) {
 
   const offset = (page - 1) * pageSize;
   const allowedColumns = new Set([
-    "Movie_ID",
-    "Title",
-    "Genre",
-    "Director",
-    "Release_Year",
-    "Language",
+    "movie_id",
+    "title",
+    "genre",
+    "director",
+    "release_year",
+    "language",
   ]);
   const filterList = [];
   const filterValues = [];
@@ -68,7 +68,7 @@ export async function getMovies(db, page = 1, pageSize = 10, options = {}) {
   const whereClause =
     filterList.length > 0 ? `WHERE ${filterList.join(" AND ")}` : "";
 
-  let orderClause = `ORDER BY "Movie_ID"`; // by default
+  let orderClause = `ORDER BY movie_id`; // by default
   if (sortBy && allowedColumns.has(sortBy)) {
     const direction = sortDirection.toUpperCase() === "DESC" ? "DESC" : "ASC";
     orderClause = `ORDER BY "${sortBy}" ${direction} `;
@@ -81,8 +81,8 @@ export async function getMovies(db, page = 1, pageSize = 10, options = {}) {
   const offsetPlaceholder = `${filterValues.length}`;
 
   const query = `
-    SELECT "Movie_ID", "Title", "Genre", "Director", "Release_Year", "Language"
-    FROM "Movie"
+    SELECT movie_id, title, genre, director, release_year, language
+    FROM movie
     ${whereClause}
     ${orderClause} 
     LIMIT $${limitPlaceholder} OFFSET $${offsetPlaceholder}
@@ -91,7 +91,7 @@ export async function getMovies(db, page = 1, pageSize = 10, options = {}) {
   const result = await db.query(query, filterValues);
 
   const queryToFetchCount = `
-    SELECT COUNT(*) AS TOTAL FROM "Movie" ${whereClause}
+    SELECT COUNT(*) AS TOTAL FROM movie ${whereClause}
     `;
 
   const totalCountResult = await db.query(queryToFetchCount, filtersOnly);
@@ -115,9 +115,9 @@ export async function getMovies(db, page = 1, pageSize = 10, options = {}) {
  */
 export async function getMovieById(db, movieId) {
   const query = `
-    SELECT "Movie_ID", "Title", "Genre", "Director", "Release_Year", "Language"
-    FROM "Movie"
-    WHERE "Movie_ID" = $1
+    SELECT movie_id, title, genre, director, release_year, language
+    FROM movie
+    WHERE movie_id = $1
   `;
   const result = await db.query(query, [movieId]);
   return result.rows[0] || null;
@@ -131,9 +131,9 @@ export async function getMovieById(db, movieId) {
  */
 export async function getMoviesByWatchlistID(db, watchlistId) {
   const query = `
-    SELECT m."Movie_ID" AS movieId, m."Title", m."Genre", m."Director", m."Release_Year", m."Language"
+    SELECT m.movie_id AS movieId, m.title, m.genre, m.director, m.release_year, m.language
     FROM watchlist_movie wm
-    JOIN "Movie" m ON wm.movie_id = m."Movie_ID"
+    JOIN movie m ON wm.movie_id = m.movie_id
     WHERE wm.watchlist_id = $1
   `;
 
@@ -163,23 +163,23 @@ export async function updateMovieById(
   let idx = 1;
 
   if (title !== undefined) {
-    updates.push(`"Title" = $${idx++}`);
+    updates.push(`title = $${idx++}`);
     values.push(title);
   }
   if (genre !== undefined) {
-    updates.push(`"Genre" = $${idx++}`);
+    updates.push(`genre = $${idx++}`);
     values.push(genre);
   }
   if (director !== undefined) {
-    updates.push(`"Director" = $${idx++}`);
+    updates.push(`director = $${idx++}`);
     values.push(director);
   }
   if (releaseYear !== undefined) {
-    updates.push(`"Release_Years" = $${idx++}`);
+    updates.push(`"release_year" = $${idx++}`);
     values.push(releaseYear);
   }
   if (language !== undefined) {
-    updates.push(`"Language" = $${idx++}`);
+    updates.push(`language = $${idx++}`);
     values.push(language);
   }
   if (updates.length === 0) {
@@ -188,10 +188,10 @@ export async function updateMovieById(
   values.push(movieId);
 
   const query = `
-    UPDATE "Movie"
+    UPDATE movie
     SET ${updates.join(", ")}
-    WHERE "Movie_ID" = $${idx}
-    RETURNING "Movie_ID", "Title", "Genre", "Director", "Release_Year", "Language"
+    WHERE movie_id = $${idx}
+    RETURNING movie_id, title, genre, director, release_year, language
   `;
   const result = await db.query(query, values);
   return result.rows[0] || null;
@@ -205,9 +205,9 @@ export async function updateMovieById(
  */
 export async function deleteMovieById(db, movieId) {
   const query = `
-    DELETE FROM "Movie"
-    WHERE "Movie_ID" = $1
-    RETURNING "Movie_ID"
+    DELETE FROM movie
+    WHERE movie_id = $1
+    RETURNING movie_id
   `;
 
   const result = await db.query(query, [movieId]);

@@ -52,9 +52,9 @@ export async function addMovieToWatchlist(db, watchlistId, movieId) {
 
   // Retrieve all movies in the watchlist.
   const moviesQuery = `
-    SELECT m."Movie_ID" AS movieId, m."Title", m."Genre", m."Director", m."Release_Year", m."Language"
+    SELECT m.movie_id AS movieId, m.title, m.genre, m.director, m.release_year, m.language
     FROM watchlist_movie wm
-    JOIN "Movie" m ON wm.movie_id = m."Movie_ID"
+    JOIN movie m ON wm.movie_id = m.movie_id
     WHERE wm.watchlist_id = $1
   `;
   const moviesResult = await db.query(moviesQuery, [watchlistId]);
