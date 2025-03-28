@@ -208,7 +208,7 @@ export default async function userController(fastify, _opts) {
           return reply.code(401).send({ error: "Invalid credentials." });
         }
 
-        const valid = await comparePassword(password, user.Password);
+        const valid = await comparePassword(password, user.password);
         if (!valid) {
           return reply.code(401).send({ error: "Invalid credentials." });
         }

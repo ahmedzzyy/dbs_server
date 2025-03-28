@@ -54,7 +54,6 @@ export default async function reviewController(fastify, _opts) {
               actor_id: { type: "number", example: 1 },
               actor_name: { type: "string", example: "John Doe" },
               country: { type: "string", example: "USA" },
-              // You can add more properties as needed
             },
           },
           404: {
