@@ -1,4 +1,5 @@
 import { getCastByMovieID } from "../services/actorService.js";
+import { getAwardsByMovieID } from "../services/awardService.js";
 import {
   createMovie,
   deleteMovieById,
@@ -174,13 +175,26 @@ export default async function movieController(fastify, _opts) {
               },
               cast: {
                 type: "array",
+                description: "Cast of the specified movie",
                 items: {
                   type: "object",
-                  description: "Cast of the specified movie",
                   properties: {
                     actor_id: { type: "number" },
                     actor_name: { type: "string" },
                     country: { type: "string" },
+                  },
+                },
+              },
+              awards: {
+                type: "array",
+                description: "Awards the movie has won",
+                items: {
+                  type: "object",
+                  properties: {
+                    award_id: { type: "number" },
+                    year: { type: "integer" },
+                    award_name: { type: "string" },
+                    award_category: { type: "string" },
                   },
                 },
               },
@@ -213,12 +227,14 @@ export default async function movieController(fastify, _opts) {
           return reply.code(404).send({ error: "Movie not found" });
         }
 
-        // TODO add fetch awards aise movies.awards = []
         const reviews = await getReviewsByMovieID(fastify.db, movie_id);
         movie.reviews = reviews;
 
         const cast = await getCastByMovieID(fastify.db, movie_id);
         movie.cast = cast;
+
+        const awards = await getAwardsByMovieID(fastify.db, movie_id);
+        movie.awards = awards;
 
         reply.send(movie);
       } catch (error) {
