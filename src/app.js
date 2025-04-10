@@ -17,15 +17,15 @@ fastify.decorate("authenticate", authenticateRequest);
 // DB Setup
 fastify.decorate("db", pool);
 
-await connectDB();
+await connectDB(fastify);
 
 const shutDown = async () => {
-  await closeDB();
+  await closeDB(fastify);
   process.exit(0);
 };
 
 fastify.addHook("onClose", async (_instance, done) => {
-  await closeDB();
+  await closeDB(fastify);
   done();
 });
 
@@ -94,12 +94,11 @@ await Promise.all([
 
 // Server Run
 const PORT = process.env.PORT || 5500;
-fastify.listen({ port: PORT }, function (err, address) {
+fastify.listen({ port: PORT }, function (err, _address) {
   if (err) {
     fastify.log.error(err);
     process.exit(1);
   }
-  console.log(`Server : Listening on ${address}`);
 });
 
 // Graceful Exit from fastify and pg

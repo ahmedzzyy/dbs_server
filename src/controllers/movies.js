@@ -124,7 +124,7 @@ export default async function movieController(fastify, _opts) {
 
         reply.send(movies);
       } catch (error) {
-        console.error(error);
+        fastify.log.error(error);
         reply.code(500).send({ error: error.message });
       }
     },

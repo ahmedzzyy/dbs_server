@@ -6,25 +6,32 @@ const pool = new Pool({
   // "max": 10 // Default hi 10 hai
 });
 
-export const connectDB = async () => {
+/**
+ * Connect to the PostgreSQL Database
+ * @param {import("fastify").FastifyInstance} fastify - Fastify Instance
+ */
+export const connectDB = async (fastify) => {
   try {
     await pool.query("SELECT 1"); // Testing ke liye
-    console.log("Server : 🟢 PostgreSQL Connected!");
+    fastify.log.info("🟢 PostgreSQL Connected!");
   } catch (error) {
-    console.error("Server : 🔴 PostgreSQL Connection Error");
-    console.error(error.message);
+    fastify.log.error({ err: error } ,"🔴 PostgreSQL Connection Error");
     process.exit(1);
   }
 };
 
-export const closeDB = async () => {
-  console.log("Server : 🔴 Closing PostgreSQL pool...");
+/**
+ * Disconnect from the PostgreSQL Database
+ * @param {import("fastify").FastifyInstance} fastify - Fastify Instance
+ */
+export const closeDB = async (fastify) => {
+  fastify.log.info("🟡 Closing PostgreSQL pool...");
   try {
     await pool.end();
+    fastify.log.info("🟢 PostgreSQL pool closed.");
   } catch (error) {
-    console.error(error);
+    fastify.log.error({ err: error }, "🔴 Error closing PostgreSQL pool");
   }
-  console.log("Server : 🟢 PostgreSQL pool closed.");
 };
 
 export default pool;
