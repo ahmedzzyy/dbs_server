@@ -120,21 +120,21 @@ This Swagger‑UI interface provides interactive API details including request/r
 
 ### Starting the Server
 
-After configuring your `.env` file, simply run:
+After configuring `.env` file, simply run:
 
 ```bash
 npm run start
 ```
 
-You should see a log message indicating the server is listening, e.g.:
+A log message indicating the server is listening is shown, e.g.:
 ```
-Server : Listening on http://localhost:5500
+Server listening on http://localhost:5500
 ```
 
 ### Making an Authenticated Request
 
 1. **Login:**
-   - POST to `/api/users/login` with your credentials.
+   - POST to `/api/users/login` with credentials.
    - Receive a JWT token on successful authentication.
 
 2. **Access Protected Endpoints:**
