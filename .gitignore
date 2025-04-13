@@ -33,3 +33,6 @@ yarn-error.log*
 
 # Test coverage directory
 coverage/
+
+# Storage Heavy Videos
+bg-video.mp4
