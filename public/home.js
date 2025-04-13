@@ -2,7 +2,7 @@
 document.getElementById("exploreBtn")?.addEventListener("click", function () {
   alert("Redirecting to the explore section...");
 });
-  
+
 // 🎞️ Auto-scroll for sliders (optional enhancement)
 function autoScrollSlider(containerSelector) {
   const slider = document.querySelector(containerSelector);
@@ -39,19 +39,21 @@ async function fetchMovies(url, containerId) {
 // 🖼️ Movie display logic
 function displayMovies(movies, containerId) {
   const slider = document.getElementById(containerId);
-  slider.innerHTML = '';
+  slider.innerHTML = "";
 
-  movies.forEach(movie => {
+  movies.forEach((movie) => {
     // if (!movie.poster_path) return;
 
-    const card = document.createElement('div');
-    card.classList.add('movie-card');
+    const card = document.createElement("div");
+    card.classList.add("movie-card");
 
-    const overlay = document.createElement('div');
-    overlay.classList.add('overlay');
+    const overlay = document.createElement("div");
+    overlay.classList.add("overlay");
 
-    const img = document.createElement('img');
-    img.src = movie.poster_path ? `https://image.tmdb.org/t/p/w300${movie.poster_path}` : "./loginbackground.jpg";
+    const img = document.createElement("img");
+    img.src = movie.poster_path
+      ? `https://image.tmdb.org/t/p/w300${movie.poster_path}`
+      : "./loginbackground.jpg";
     img.alt = movie.title;
 
     const title = document.createElement("p");
@@ -65,12 +67,16 @@ function displayMovies(movies, containerId) {
   });
 }
 
-
-
 // 🚀 Load movies on window load
 window.onload = () => {
-  fetchMovies(`/api/movies?page=1&pageSize=10&sortBy=release_year&sortDirection=DESC`, 'movie-slider');
-  fetchMovies(`/api/movies?page=1&pageSize=10&sortBy=release_year&sortDirection=ASC`, 'top-rated-slider');
+  fetchMovies(
+    `/api/movies?page=1&pageSize=10&sortBy=release_year&sortDirection=DESC`,
+    "movie-slider",
+  );
+  fetchMovies(
+    `/api/movies?page=1&pageSize=10&sortBy=release_year&sortDirection=ASC`,
+    "top-rated-slider",
+  );
   // fetchMovies(`${BASE_URL}/movie/now_playing?api_key=${API_KEY}`, 'now-playing-slider');
 };
 autoScrollSlider("#movie-slider");

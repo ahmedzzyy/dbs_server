@@ -1,56 +1,69 @@
-const API_KEY = 'a51bc4a5c1986eed1a130d903e71d249';
+const container = document.getElementById("movieResultsBody");
+const languageFilter = document.getElementById("languageFilter");
+const sortOrder = document.getElementById("sortOrder");
 
-const searchInput = document.getElementById("searchBar"); // 🔁 fixed
-const container = document.getElementById("movieResults"); // 🔁 fixed
+let allMovies = [];
 
-searchInput.addEventListener("input", async () => {
-  const query = searchInput.value;
-  if (query.length < 2) return;
-
-  const res = await fetch(`https://api.themoviedb.org/3/search/movie?api_key=${API_KEY}&query=${query}`);
-  const data = await res.json();
+function displayMovies(movies) {
   container.innerHTML = "";
 
-  data.results.forEach(movie => {
-    const poster = movie.poster_path
-      ? `https://image.tmdb.org/t/p/w200${movie.poster_path}`
-      : "placeholder.jpg";
+  movies.forEach((movie) => {
+    const title = movie.title || "N/A";
+    const genre = movie.genre || "Unknown";
+    const language = movie.language || "Unknown";
+
     container.innerHTML += `
-      <div class="movie-card">
-        <img src="${poster}" />
-        <h4>${movie.title}</h4>
-      </div>
+      <tr>
+        <td data-label="Title">${title}</td>
+        <td data-label="Director">${movie.director}</td>
+        <td data-label="Release Year">${movie.release_year}</td>
+        <td data-label="Genre">${genre}</td>
+        <td data-label="Language">${language.toUpperCase()}</td>
+      </tr>
     `;
   });
-});
-function displayMovies(movies) {
-    const container = document.getElementById("movieResults");
-    container.innerHTML = "";
-    movies.forEach(movie => {
-      const poster = movie.poster_path
-        ? `https://image.tmdb.org/t/p/w200${movie.poster_path}`
-        : "placeholder.jpg";
-      container.innerHTML += `
-        <div class="movie-card">
-          <img src="${poster}" />
-          <h4>${movie.title}</h4>
-        </div>
-      `;
-    });
+}
+
+function updateLanguageOptions(movies) {
+  const languages = [...new Set(movies.map((m) => m.language).filter(Boolean))];
+  languages.sort();
+
+  languages.forEach((lang) => {
+    const option = document.createElement("option");
+    option.value = lang;
+    option.textContent = lang.toUpperCase();
+    languageFilter.appendChild(option);
+  });
+}
+
+function applyFilters() {
+  let filtered = [...allMovies];
+
+  const selectedLang = languageFilter.value;
+  const selectedSort = sortOrder.value;
+
+  if (selectedLang !== "all") {
+    filtered = filtered.filter((m) => m.language === selectedLang);
   }
 
+  filtered.sort((a, b) => {
+    const yearA = parseInt(a.release_year);
+    const yearB = parseInt(b.release_year);
+
+    return selectedSort === "asc" ? yearA - yearB : yearB - yearA;
+  });
+
+  displayMovies(filtered);
+}
+
+languageFilter.addEventListener("change", applyFilters);
+sortOrder.addEventListener("change", applyFilters);
 
 window.addEventListener("DOMContentLoaded", async () => {
-  const res = await fetch(`https://api.themoviedb.org/3/trending/movie/week?api_key=${API_KEY}`);
+  const res = await fetch(`/api/movies?page=1&pageSize=50`);
   const data = await res.json();
-  displayMovies(data.results);
-});
+  allMovies = data.movies || [];
 
-searchInput.addEventListener("input", async () => {
-    const query = searchInput.value;
-    if (query.length < 2) return;
-  
-    const res = await fetch(`https://api.themoviedb.org/3/search/movie?api_key=${API_KEY}&query=${query}`);
-    const data = await res.json();
-    displayMovies(data.results);
-  });
+  updateLanguageOptions(allMovies);
+  applyFilters();
+});

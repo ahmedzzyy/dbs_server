@@ -1,88 +1,98 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>BingeBase</title>
-  <link rel="stylesheet" href="home.css">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300..900;1,300..900&display=swap" rel="stylesheet">
-</head>
-<body>
-
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>BingeBase</title>
+    <link rel="stylesheet" href="home.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300..900;1,300..900&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
     <div class="hero">
-        <video id="bg-video" autoplay loop muted>
-          <source src="bg-video.mp4" type="video/mp4" />
-        </video>
-        <div class="overlay"></div>
-      
-        <header>
-          <div class="logo">BingeBase</div>
-          <nav>
-            <ul>
-              <li><a href="/login">Login</a></li>
-              <li><a href="/movies">Movies</a></li>
-              <li><a href="/ratings">Ratings</a></li>
-              <li><a href="/actor">Actors</a></li>
-              <li><a href="/">Home</a></li>
-            </ul>
-          </nav>
-        </header>
-      
-        <div class="main-text">
-          <h1>BingeBase – Your HQ for non-stop watching</h1>
-          <p>Lights. Camera. Scroll. 🎬 Welcome to CineScope — the only place where movies, memes, and main-character energy collide. Dive into hot drops, cult classics, celeb tea, and all things binge-worthy. Your FYP, but for film. 🍿💥</p>
-          <button id="exploreBtn">Explore Now</button>
-        </div>
+      <video id="bg-video" autoplay loop muted>
+        <source src="bg-video.mp4" type="video/mp4" />
+      </video>
+      <div class="overlay"></div>
+
+      <header>
+        <div class="logo">BingeBase</div>
+        <nav>
+          <ul>
+            <li><a href="/login">Login</a></li>
+            <li><a href="/movies">Movies</a></li>
+            <li><a href="/ratings">Ratings</a></li>
+            <li><a href="/actor">Actors</a></li>
+            <li><a href="/">Home</a></li>
+          </ul>
+        </nav>
+      </header>
+
+      <div class="main-text">
+        <h1>BingeBase – Your HQ for non-stop watching</h1>
+        <p>
+          Lights. Camera. Scroll. 🎬 Welcome to CineScope — the only place where
+          movies, memes, and main-character energy collide. Dive into hot drops,
+          cult classics, celeb tea, and all things binge-worthy. Your FYP, but
+          for film. 🍿💥
+        </p>
+        <button id="exploreBtn">Explore Now</button>
       </div>
-      <hr class="section-divider">
-  <!-- Movie Slider Section -->
-  <section class="movie-slider-section">
-    <h2>🔥 Released Now</h2>
-    <div class="slider-container" id="movie-slider">
-      <!-- JS will inject movie cards here -->
     </div>
-  </section>
-  
-  <section class="movie-slider-section">
-    <h2>⭐ Discover Old Gems</h2>
-    <div class="slider-container" id="top-rated-slider"></div>
-  </section>
-  
-  <!-- <section class="movie-slider-section">
+    <hr class="section-divider" />
+    <!-- Movie Slider Section -->
+    <section class="movie-slider-section">
+      <h2>🔥 Released Now</h2>
+      <div class="slider-container" id="movie-slider">
+        <!-- JS will inject movie cards here -->
+      </div>
+    </section>
+
+    <section class="movie-slider-section">
+      <h2>⭐ Discover Old Gems</h2>
+      <div class="slider-container" id="top-rated-slider"></div>
+    </section>
+
+    <!-- <section class="movie-slider-section">
     <h2>🎥 Now Playing</h2>
     <div class="slider-container" id="now-playing-slider"></div>
   </section> -->
-  <hr class="section-divider">
-  <footer class="footer">
-    <div class="footer-container">
-      <div class="footer-logo">🎬 BingeBase</div>
-      <p>Copyright © 2025 BingeBase Inc.</p>
-      <p>Made with ❤️ for movie lovers</p>
-      <div class="social-icons">
-        <a href="#"><img src="icons/insta.png" alt="Instagram"></a>
-        <a href="#"><img src="icons/twitter.png" alt="Twitter"></a>
-        <a href="#"><img src="icons/youtube.png" alt="YouTube"></a>
+    <hr class="section-divider" />
+    <footer class="footer">
+      <div class="footer-container">
+        <div class="footer-logo">🎬 BingeBase</div>
+        <p>Copyright © 2025 BingeBase Inc.</p>
+        <p>Made with ❤️ for movie lovers</p>
+        <div class="social-icons">
+          <a href="#"><img src="icons/insta.png" alt="Instagram" /></a>
+          <a href="#"><img src="icons/twitter.png" alt="Twitter" /></a>
+          <a href="#"><img src="icons/youtube.png" alt="YouTube" /></a>
+        </div>
       </div>
+    </footer>
+    <hr class="section-divider" />
+    <div class="quick-links">
+      <h4>Quick Links</h4>
+      <ul>
+        <li><a href="#">Contact Us</a></li>
+        <li><a href="#">About</a></li>
+        <li><a href="#">Terms & Privacy</a></li>
+      </ul>
     </div>
-  </footer>
-  <hr class="section-divider">
-  <div class="quick-links">
-    <h4>Quick Links</h4>
-    <ul>
-      <li><a href="#">Contact Us</a></li>
-      <li><a href="#">About</a></li>
-      <li><a href="#">Terms & Privacy</a></li>
-    </ul>
-  </div>
-  <div class="newsletter">
-    <h4>Subscribe to our CineLetter</h4>
-    <input type="email" placeholder="Enter your email" />
-    <button>Subscribe</button>
-  </div>
-  <p style="text-align:center; font-style:italic; margin-top:20px;">"Cinema is a mirror by which we often see ourselves." – Alejandro González Iñárritu</p>
+    <div class="newsletter">
+      <h4>Subscribe to our CineLetter</h4>
+      <input type="email" placeholder="Enter your email" />
+      <button>Subscribe</button>
+    </div>
+    <p style="text-align: center; font-style: italic; margin-top: 20px">
+      "Cinema is a mirror by which we often see ourselves." – Alejandro González
+      Iñárritu
+    </p>
 
-  <script src="home.js"></script>
-</body>
+    <script src="home.js"></script>
+  </body>
 </html>
