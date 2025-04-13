@@ -2,7 +2,9 @@ import Fastify from "fastify";
 import cors from "@fastify/cors";
 import fastifySwagger from "@fastify/swagger";
 import fastifySwaggerUi from "@fastify/swagger-ui";
+import fastifyStatic from "@fastify/static";
 import "dotenv/config";
+import path from "node:path";
 
 import pool, { closeDB, connectDB } from "./db/connect.js";
 import { authenticateRequest } from "./utils/authUtil.js";
@@ -91,6 +93,11 @@ await Promise.all([
   }),
   fastify.register(await import("./controllers/actors.js"), { prefix: "/api" }),
 ]);
+
+// Serve static files
+await fastify.register(fastifyStatic, {
+  root: path.join(process.cwd(), 'public')
+});
 
 // Server Run
 const PORT = process.env.PORT || 5500;
