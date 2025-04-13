@@ -1,0 +1,110 @@
+.actor-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(11.25rem, 1fr)); /* 180px = 11.25rem */
+    gap: 1.25rem; /* 20px */
+    padding: 1.25rem;
+  }
+  
+  .actor-card {
+    background-color: #222;
+    border-radius: 0.625rem; /* 10px */
+    overflow: hidden;
+    text-align: center;
+    transition: transform 0.3s;
+    padding: 0.625rem;
+  }
+  
+  .actor-card:hover {
+    transform: scale(1.03);
+  }
+  
+  .actor-card img {
+    width: 100%;
+    height: 15.625rem; /* 250px */
+    object-fit: cover;
+    border-radius: 0.5rem; /* 8px */
+  }
+  
+  .actor-card h3 {
+    margin: 0.625rem 0 0.3125rem; /* 10px 0 5px */
+    font-size: 1rem;
+    color: #00fff7;
+  }
+  
+  .actor-card p {
+    font-size: 0.85rem;
+    color: #ccc;
+  }
+  
+  body {
+    background-color: rgb(21, 21, 21);
+    font-size: 16px; /* root font size for rem units */
+    font-family: "Rubik", sans-serif;
+  }
+  
+  .logo {
+    font-size: 1.5rem;
+    text-decoration: none;
+    color: #00fff7;
+    font-weight: bolder;
+    margin:0px 0px 0px 0px;
+  }
+  
+  header {
+    display: flex;
+    justify-content: space-between;
+    align-items:center;
+    padding: 0.9375rem 1.5625rem; /* 15px 25px */
+    background-color: #111;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    flex-wrap: wrap;
+  }
+  
+  #searchBar {
+    padding: 0.5rem 0.75rem; /* 8px 12px */
+    border-radius: 1.25rem; /* 20px */
+    border: none;
+    outline: none;
+    font-size: 1rem;
+    background-color: #333;
+    color: #fff;
+    width: 15.625rem; /* 250px */
+  }
+  
+  #searchBar::placeholder {
+    color: #aaa;
+  }
+  
+  /* 📱 Mobile Devices */
+  @media (max-width: 37.5rem) { /* 600px */
+    .actor-card img {
+      height: 11.25rem; /* 180px */
+    }
+  
+    .actor-card h3 {
+      font-size: 0.9rem;
+    }
+  
+    .actor-card p {
+      font-size: 0.75rem;
+    }
+  
+    #searchBar {
+      width: 100%;
+      margin-top: 0.625rem;
+    }
+  
+    header {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+  }
+  
+  /* 💻 Tablets */
+  @media (max-width: 56.25rem) { /* 900px */
+    #searchBar {
+      width: 60%;
+    }
+  }

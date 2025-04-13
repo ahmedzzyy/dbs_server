@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Movie Ratings - BingeBase</title>
+  <link rel="stylesheet" href="rating.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300..900;1,300..900&display=swap" rel="stylesheet">
+</head>
+<body>
+  <header>
+    <a href="home.html" class="logo">BingeBase</a>
+    <input type="text" id="searchBar" placeholder="Search for a movie..." />
+  </header>
+
+  <main id="ratings-container" class="movie-grid"></main>
+
+  <!-- Modal -->
+<div id="movie-modal" class="modal hidden">
+    <div class="modal-content">
+      <span class="close-button">&times;</span>
+      <img id="modal-poster" />
+      <h2 id="modal-title"></h2>
+      <p id="modal-overview"></p>
+      <p><strong>Release Date:</strong> <span id="modal-date"></span></p>
+      <p><strong>Rating:</strong> <span id="modal-rating"></span></p>
+      <p><strong>Cast:</strong> <span id="modal-cast"></span></p>
+    </div>
+  </div>
+  <script src="ratings.js"></script>
+</body>
+</html>
