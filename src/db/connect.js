@@ -15,7 +15,7 @@ export const connectDB = async (fastify) => {
     await pool.query("SELECT 1"); // Testing ke liye
     fastify.log.info("🟢 PostgreSQL Connected!");
   } catch (error) {
-    fastify.log.error({ err: error } ,"🔴 PostgreSQL Connection Error");
+    fastify.log.error({ err: error }, "🔴 PostgreSQL Connection Error");
     process.exit(1);
   }
 };

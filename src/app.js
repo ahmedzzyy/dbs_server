@@ -96,7 +96,7 @@ await Promise.all([
 
 // Serve static files
 await fastify.register(fastifyStatic, {
-  root: path.join(process.cwd(), 'public')
+  root: path.join(process.cwd(), "public"),
 });
 
 fastify.register(await import("./view.js"));
