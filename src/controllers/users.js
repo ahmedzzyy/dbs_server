@@ -117,7 +117,7 @@ export default async function userController(fastify, _opts) {
         if (existingUser) {
           return reply
             .code(409)
-            .send({ error: "Both e-mail and password are required." });
+            .send({ error: "User with same e-mail already registered." });
         }
 
         const hashedPassword = await hashPassword(password);
