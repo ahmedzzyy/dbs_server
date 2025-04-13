@@ -99,6 +99,8 @@ await fastify.register(fastifyStatic, {
   root: path.join(process.cwd(), 'public')
 });
 
+fastify.register(await import("./view.js"));
+
 // Server Run
 const PORT = process.env.PORT || 5500;
 fastify.listen({ port: PORT }, function (err, _address) {
