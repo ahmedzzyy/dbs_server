@@ -1,67 +1,39 @@
-const API_KEY = "a51bc4a5c1986eed1a130d903e71d249";
 const container = document.getElementById("ratings-container");
+const modal = document.getElementById("movie-modal");
+const closeBtn = document.querySelector(".close-button");
 
-// Fetch and display popular movies
-async function fetchPopularMovies() {
+async function fetchMovies(sort = "", direction = "ASC") {
+  let url = "/api/movies";
+  if (sort) url += `&sortBy=${sort}&sortDirection=${direction}`;
+
   try {
-    const res = await fetch(
-      `https://api.themoviedb.org/3/movie/popular?api_key=${API_KEY}`,
-    );
+    const res = await fetch(url);
     const data = await res.json();
-
-    data.results.forEach((movie) => {
-      const poster = movie.poster_path
-        ? `https://image.tmdb.org/t/p/w300${movie.poster_path}`
-        : "placeholder.jpg";
-
-      const ratingPercent = Math.round(movie.vote_average * 10);
-
-      const card = `
-        <div class="movie-card" 
-             data-id="${movie.id}" 
-             data-title="${movie.title}"
-             data-overview="${movie.overview}" 
-             data-date="${movie.release_date}"
-             data-rating="${movie.vote_average}" 
-             data-poster="${poster}">
-          <img src="${poster}" alt="${movie.title}" />
-          <div class="movie-info">
-            <h3>${movie.title}</h3>
-            <p class="release-date">Release: ${movie.release_date}</p>
-            <p class="overview">${movie.overview.slice(0, 120)}...</p>
-            <div class="rating-bar">
-              <div class="rating-fill" style="width: ${ratingPercent}%"></div>
-            </div>
-            <p class="rating-text">Rating: ${movie.vote_average}/10</p>
-          </div>
-        </div>
-      `;
-      container.innerHTML += card;
-    });
+    renderMovies(data.movies);
   } catch (err) {
     console.error("Error fetching movies:", err);
   }
 }
 
-// Fetch cast of a movie
-async function getCast(movieId) {
-  try {
-    const res = await fetch(
-      `https://api.themoviedb.org/3/movie/${movieId}/credits?api_key=${API_KEY}`,
-    );
-    const data = await res.json();
-    return data.cast
-      .slice(0, 5)
-      .map((actor) => actor.name)
-      .join(", ");
-  } catch (error) {
-    return "Cast info not available";
-  }
+function renderMovies(movies) {
+  container.innerHTML = movies
+    .map((movie) => {
+      return `
+        <div class="movie-card"
+          data-id="${movie.movie_id}">
+          <div class="movie-info">
+            <h3>${movie.title}</h3>
+            <p class="release-date">Release: ${movie.release_year}</p>
+            <p class="overview">Directed by ${movie.director}</p>
+            <button class="view-more-btn" data-id="${movie.movie_id}">
+              View More
+            </button>
+          </div>
+        </div>
+      `;
+    })
+    .join("");
 }
-
-// Modal handling
-const modal = document.getElementById("movie-modal");
-const closeBtn = document.querySelector(".close-button");
 
 function openModal() {
   modal.classList.remove("hidden");
@@ -76,78 +48,96 @@ window.addEventListener("click", (e) => {
   if (e.target === modal) closeModal();
 });
 
-// Click handler for movie cards
 container.addEventListener("click", async (e) => {
-  const card = e.target.closest(".movie-card");
-  if (!card) return;
+  const viewBtn = e.target.closest(".view-more-btn");
+  if (!viewBtn) return;
 
-  const movieId = card.dataset.id;
+  const movieId = viewBtn.dataset.id;
+  window.currentMovieId = movieId;
 
-  document.getElementById("modal-title").textContent = card.dataset.title;
-  document.getElementById("modal-overview").textContent = card.dataset.overview;
-  document.getElementById("modal-date").textContent = card.dataset.date;
-  document.getElementById("modal-rating").textContent =
-    `${card.dataset.rating}/10`;
-  document.getElementById("modal-poster").src = card.dataset.poster;
-
-  const cast = await getCast(movieId);
-  document.getElementById("modal-cast").textContent = cast;
-
-  openModal();
-});
-const searchInput = document.getElementById("searchBar");
-
-searchInput.addEventListener("input", () => {
-  const query = searchInput.value.trim();
-  if (query) {
-    fetchSearchResults(query);
-  } else {
-    container.innerHTML = ""; // clear results
-    fetchPopularMovies(); // reload popular movies
-  }
-});
-
-async function fetchSearchResults(query) {
   try {
-    const res = await fetch(
-      `https://api.themoviedb.org/3/search/movie?api_key=${API_KEY}&query=${encodeURIComponent(query)}`,
-    );
-    const data = await res.json();
+    const res = await fetch(`/api/movies/${movieId}`);
+    const movie = await res.json();
 
-    container.innerHTML = "";
+    document.getElementById("modal-title").textContent = movie.title;
+    document.getElementById("modal-overview").textContent = `Genre: ${movie.genre}`;
+    document.getElementById("modal-date").textContent = movie.release_year;
+    document.getElementById("modal-rating").textContent = movie.reviews.length
+      ? `${(
+          movie.reviews.reduce((sum, r) => sum + r.rating, 0) /
+          movie.reviews.length
+        ).toFixed(1)}/10`
+      : "No rating";
 
-    data.results.forEach((movie) => {
-      const poster = movie.poster_path
-        ? `https://image.tmdb.org/t/p/w300${movie.poster_path}`
-        : "placeholder.jpg";
+    document.getElementById("modal-cast").textContent = movie.cast
+      .map((c) => c.actor_name)
+      .join(", ") || "No cast listed";
 
-      const ratingPercent = Math.round(movie.vote_average * 10);
+    // Optional: Add reviews and awards if those sections exist in your modal
+    const reviewsList = document.getElementById("modal-reviews");
+    reviewsList.innerHTML = movie.reviews.length
+      ? movie.reviews.map(r => `<li><strong>${r.username}</strong>: ${r.comment} (${r.rating}/10)</li>`).join("")
+      : "<li>No reviews available.</li>";
 
-      const card = `
-        <div class="movie-card" 
-             data-id="${movie.id}" 
-             data-title="${movie.title}"
-             data-overview="${movie.overview}" 
-             data-date="${movie.release_date}"
-             data-rating="${movie.vote_average}" 
-             data-poster="${poster}">
-          <img src="${poster}" alt="${movie.title}" />
-          <div class="movie-info">
-            <h3>${movie.title}</h3>
-            <p class="release-date">Release: ${movie.release_date}</p>
-            <p class="overview">${movie.overview.slice(0, 120)}...</p>
-            <div class="rating-bar">
-              <div class="rating-fill" style="width: ${ratingPercent}%"></div>
-            </div>
-            <p class="rating-text">Rating: ${movie.vote_average}/10</p>
-          </div>
-        </div>
-      `;
-      container.innerHTML += card;
-    });
-  } catch (error) {
-    console.error("Search error:", error);
+    const awardsList = document.getElementById("modal-awards");
+    awardsList.innerHTML = movie.awards.length
+      ? movie.awards.map(a => `<li>${a.year}: ${a.award_name} - ${a.award_category}</li>`).join("")
+      : "<li>No awards listed.</li>";
+
+    openModal();
+  } catch (err) {
+    console.error("Error fetching movie detail:", err);
   }
+});
+
+// Show/hide review form if token exists
+const reviewFormContainer = document.getElementById("review-form-container");
+if (localStorage.getItem("token")) {
+  reviewFormContainer.classList.remove("hidden");
+  document.getElementById("review-form").onsubmit = async (event) => {
+    event.preventDefault();
+    const comment = document.getElementById("review-comment").value;
+    const rating = parseInt(document.getElementById("review-rating").value);
+
+    if (!rating || rating < 1 || rating > 10) {
+      alert("Rating must be between 1 and 10.");
+      return;
+    }
+
+    try {
+      const res = await fetch(`/api/movies/${window.currentMovieId}/reviews`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+        body: JSON.stringify({ comment, rating }),
+      });
+
+      if (!res.ok) throw new Error("Failed to post review");
+      alert("Review submitted successfully!");
+
+      // Optional: Refresh modal content
+      const updated = await fetch(`/api/movies/${window.currentMovieId}`);
+      const updatedMovie = await updated.json();
+
+      const reviewsList = document.getElementById("modal-reviews");
+      reviewsList.innerHTML = updatedMovie.reviews.length
+        ? updatedMovie.reviews.map(r =>
+            `<li><strong>${r.username}</strong>: ${r.comment} (${r.rating}/10)</li>`
+          ).join("")
+        : "<li>No reviews available.</li>";
+
+      // Reset form
+      event.target.reset();
+    } catch (err) {
+      console.error("Error submitting review:", err);
+      alert("Something went wrong. Please try again.");
+    }
+  };
+} else {
+  reviewFormContainer.classList.add("hidden");
 }
-// Start fetching on page load
-fetchPopularMovies();
+
+
+fetchMovies();

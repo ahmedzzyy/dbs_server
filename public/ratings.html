@@ -1,37 +1,52 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Movie Ratings - BingeBase</title>
-    <link rel="stylesheet" href="rating.css" />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300..900;1,300..900&display=swap"
-      rel="stylesheet"
-    />
-  </head>
-  <body>
-    <header>
-      <a href="/" class="logo">BingeBase</a>
-      <input type="text" id="searchBar" placeholder="Search for a movie..." />
-    </header>
 
-    <main id="ratings-container" class="movie-grid"></main>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Movie Ratings - BingeBase</title>
+  <link rel="stylesheet" href="rating.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300..900;1,300..900&display=swap"
+    rel="stylesheet" />
+</head>
 
-    <!-- Modal -->
-    <div id="movie-modal" class="modal hidden">
-      <div class="modal-content">
-        <span class="close-button">&times;</span>
-        <img id="modal-poster" />
-        <h2 id="modal-title"></h2>
-        <p id="modal-overview"></p>
-        <p><strong>Release Date:</strong> <span id="modal-date"></span></p>
-        <p><strong>Rating:</strong> <span id="modal-rating"></span></p>
-        <p><strong>Cast:</strong> <span id="modal-cast"></span></p>
+<body>
+  <header>
+    <a href="/" class="logo">BingeBase</a>
+  </header>
+
+  <main id="ratings-container" class="movie-grid"></main>
+
+  <!-- Modal -->
+  <div id="movie-modal" class="modal hidden">
+    <div class="modal-content">
+      <span class="close-button">&times;</span>
+      <img id="modal-poster" />
+      <h2 id="modal-title"></h2>
+      <p id="modal-overview"></p>
+      <p><strong>Release Date:</strong> <span id="modal-date"></span></p>
+      <p><strong>Rating:</strong> <span id="modal-rating"></span></p>
+      <h4>🎭 Cast</h4>
+      <p id="modal-cast"></p>
+
+      <h4>🏆 Awards</h4>
+      <ul id="modal-awards"></ul>
+
+      <h4>💬 Reviews</h4>
+      <ul id="modal-reviews"></ul>
+      <div id="review-form-container" class="hidden">
+        <h4>✍️ Leave a Review</h4>
+        <form id="review-form">
+          <textarea id="review-comment" rows="3" placeholder="Your thoughts..." required></textarea>
+          <input type="number" id="review-rating" min="1" max="10" placeholder="Rating (1-10)" required />
+          <button type="submit">Submit Review</button>
+        </form>
       </div>
     </div>
-    <script src="ratings.js"></script>
-  </body>
+  </div>
+  <script src="ratings.js"></script>
+</body>
+
 </html>
