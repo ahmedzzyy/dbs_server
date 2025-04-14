@@ -84,3 +84,24 @@ autoScrollSlider("#top-rated-slider");
 // autoScrollSlider("#now-playing-slider");
 // Load movies on page load
 // window.onload = fetchTrendingMovies;
+
+document.addEventListener('DOMContentLoaded', () => {
+  const authLink = document.getElementById('auth-link'); // Login/Logout link
+  
+  // Check if a token exists in localStorage
+  const token = localStorage.getItem('token');
+
+  // If token exists, display Logout, otherwise show Login
+  if (token) {
+    authLink.innerHTML = 'Logout';
+    authLink.setAttribute('href', '#');
+    authLink.addEventListener('click', () => {
+      // Handle logout by removing the token
+      localStorage.removeItem('token');
+      window.location.reload(); // Reload the page after logout
+    });
+  } else {
+    authLink.innerHTML = 'Login';
+    authLink.setAttribute('href', '/login');
+  }
+});
